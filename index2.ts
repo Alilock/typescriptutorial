@@ -1,6 +1,5 @@
 import axios from 'axios'
 import readline from 'readline-sync'
-let sa = readline.question('sa')
 type User = {
     name: string,
     age: number,
@@ -67,7 +66,10 @@ type Geo = {
 
 
 let students: Student[] = []
-
+var baseUrlCustomer = 'https://northwind.vercel.app/api/customers/'
+var instanceCustomer = axios.create({
+    baseURL: baseUrlCustomer
+})
 async function getAllStudent(): Promise<Student[]> {
 
     let datas = (await axios.get("https://jsonplaceholder.typicode.com/users"))
@@ -76,10 +78,14 @@ async function getAllStudent(): Promise<Student[]> {
     return students
 
 }
-
+const getStayLondon = () => {
+    instanceCustomer.get('').then(response => {
+        let stayLondonCustomers = response.data.filter(element => element.address?.city === 'London')
+        console.log(stayLondonCustomers);
+    })
+}
 async function Main() {
     await getAllStudent()
 }
-
 Main()
 

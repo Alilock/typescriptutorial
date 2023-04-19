@@ -37,69 +37,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
-var user1 = {
-    name: 'Nese',
-    age: 18,
-    isAdult: false
-};
-var user2 = {
-    name: 'Nese',
-    age: 18,
-    isAdult: false
-};
-var user3 = {
-    name: 'Nese',
-    age: 18,
-    isAdult: false
-};
-var users = [];
-users.push(user1);
-users.push(user2);
-users.push(user3);
-var users2 = ['Ali', 'Bla', "Bla"];
-function ListUser(users) {
-    users.map(function (u) {
-        console.log(u.name);
-    });
-}
-ListUser(users);
-var students = [];
-var baseUrlCustomer = 'https://northwind.vercel.app/api/customers/';
-var instanceCustomer = axios_1.default.create({
-    baseURL: baseUrlCustomer
-});
-function getAllStudent() {
+function getLondonCustomers() {
     return __awaiter(this, void 0, void 0, function () {
-        var datas, students;
+        var datas, filtered;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, axios_1.default.get("https://jsonplaceholder.typicode.com/users")];
+                case 0: return [4 /*yield*/, axios_1.default.get('https://northwind.vercel.app/api/customers')];
                 case 1:
-                    datas = (_a.sent());
-                    students = datas.data;
-                    console.log(students[0].address.geo);
-                    return [2 /*return*/, students];
+                    datas = _a.sent();
+                    filtered = datas.data.filter(function (c) { var _a; return ((_a = c.address) === null || _a === void 0 ? void 0 : _a.city) === 'London'; });
+                    filtered.map(function (f) { return console.log(f.address); });
+                    return [2 /*return*/];
             }
         });
     });
 }
-var getStayLondon = function () {
-    instanceCustomer.get('').then(function (response) {
-        var stayLondonCustomers = response.data.filter(function (element) { var _a; return ((_a = element.address) === null || _a === void 0 ? void 0 : _a.city) === 'London'; });
-        console.log(stayLondonCustomers);
+function getNullCount() {
+    return __awaiter(this, void 0, void 0, function () {
+        var datas, count;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios_1.default.get('https://northwind.vercel.app/api/customers')];
+                case 1:
+                    datas = (_a.sent()).data;
+                    count = datas.filter(function (c) { var _a; return ((_a = c.address) === null || _a === void 0 ? void 0 : _a.region) == 'NULL'; }).length;
+                    console.log(count);
+                    return [2 /*return*/];
+            }
+        });
     });
-};
+}
 function Main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, getAllStudent()];
+                case 0: 
+                // await getLondonCustomers()
+                return [4 /*yield*/, getNullCount()];
                 case 1:
+                    // await getLondonCustomers()
                     _a.sent();
                     return [2 /*return*/];
             }
         });
     });
 }
-getStayLondon();
-// Main()
+Main();
